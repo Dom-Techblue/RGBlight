@@ -25,7 +25,7 @@ O estudo desses conceitos é fundamental para entender como os dispositivos elet
 | Resistor   | 3    | 1 resistor de 200Ω e 2 de 100Ω   |
 | Arduino UNO    | 1       | -----------  |
 
-#COMO FUNCIONA:
+#COMO FUNCIONA
 1- Após iniciar o programa, a mistura das cores dos 3 LEDs (vermelho, verde e azul) gera as cores do arco-íris que vão se alterando lentamente e de forma aleatória.
 2- Essa combinação de cores é alcançada ao regular a luminosidade de cada um dos três LEDs usando a técnica de PWM (Modulação por Largura de Pulso), o que resulta em diferentes valores RGB, ou seja, cores distintas. Esse efeito opera de maneira semelhante à composição de um monitor de computador, que é composto por minúsculos pontos vermelhos, verdes e azuis.
 3-Difundindo a luz usando um cilindro de papel (folha A4), é possível criar uma agradável mistura de cores. Os LEDs podem ser inseridos em qualquer objeto com capacidade de difusão de luz, ou então é possível refletir a luz usando um material difusor reflexivo. Um  exemplo interessante é posicionar as luzes no interior de uma pequena garrafa de plástico (de preferência, com plástico mais fino), para obter melhores resultados.
