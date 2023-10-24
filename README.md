@@ -38,8 +38,135 @@ Ao controlar a luminosidade usando PWM, é possível criar uma variedade ainda m
 
 Neste projeto utilizamos as cores do arco-íris definidas como...
 
-| #FF0000 | RGB (255, 0, 0)|
-| --- | --- |
-| #FF7F00 | RGB (255, 127, 0) |
-| #FFFF00 | RGB (255, 255, 0) |
+| #FF0000 | RGB (255, 0, 0) | vermelho |
+| :---         |     :---:      |          ---: |
+#FF7F00 | RGB (255, 127, 0) | laranja |
+| #FFFF00 | RGB (255, 255, 0) | amarelo |
+| #FFFF00 | RGB (0, 255, 0) | verde |
+| #0000FF | RGB (0, 0, 255) | azul | 
+| #4B0082 | RGB (75, 0, 130) | roxo |
+| #8F00FF | RGB (143, 0, 255) | violeta|
+
+
+
+
+
+
+
+##EXPLICAÇÃO DO CÓDIGO
+
+Foi declarado as variáveis COR[], INC[], red, green, blue, redPin, greenPin e bluePin;
+
+float COR1[3];
+float COR2[3];
+float INC[3];
+ 
+int red, green, blue;
+int redPin = 11;
+int greenPin = 10;
+int bluePin = 9;
+
+1.1 Foi utilizado as variáveis tipo ‘float’ e ‘int’;
+1.2 As variáveis red, green e blue, tipo inteiro, se referem aos valores RGB a serem armazenados;
+1.3 As variáveis arrays COR1[3], COR2[3] e INC[3], tipo float, se referem aos valores RGB e o valor de Incremento;
+1.4  As variáveis tipo inteiro redPin, greenPin e bluePin, se referem aos LEDs 5mm de alto brilho conectados nos pinos 11, 10 e 9 do controlador Arduino.
+
+Na estrutura void setup(), realizamos o seguinte:
+
+ void setup()
+{
+  COR1[0] = 0;
+  COR1[1] = 0;
+  COR1[2] = 0;
+ 
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+}
+
+2.1 Foi configurado os valores da array COR1[] com zero para todos os seus elementos, o que resulta no conjunto de valores iniciais do modelo RGB da lâmpada, onde todos os componentes estão definidos como zero, representando assim o estado inicial da lâmpada, ou seja, a lâmpada está desligada;
+
+2.2 Foram configuradas as variáveis redPin, greenPin e bluePin como saídas do controlador Arduino, usando o modo "OUTPUT", e as conectamos aos pinos 11, 10 e 9, respectivamente. Isso permite que o Arduino controle as saídas nessas portas, que geralmente estão associadas às cores vermelha, verde e azul de um sistema de iluminação RGB. Essa configuração é importante para controlar as cores da lâmpada ou qualquer outro dispositivo RGB conectado ao Arduino.
+
+Na estrutura void loop(), temos o seguinte código:
+
+void loop()
+{
+  setColor(COR2[0] = 255, COR2[1] = 0, COR2[2] = 0 );  // vermelho
+  delay(1500);
+  setColor(COR2[0] = 255, COR2[1] = 117, COR2[2] = 10);  // laranja
+  delay(1500);
+  setColor(COR2[0] = 255, COR2[1] = 255, COR2[2] = 0 );  // amarelo
+  delay(1500);
+  setColor(COR2[0] = 0, COR2[1] = 255, COR2[2] = 0 );  // verde
+  delay(1500);
+  setColor(COR2[0] = 0, COR2[1] = 0, COR2[2] = 255 );  // azul
+  delay(1500);
+  setColor(COR2[0] = 75, COR2[1] = 0, COR2[2] = 130);  // índigo
+  delay(1500);
+  setColor(COR2[0] = 143, COR2[1] = 0, COR2[2] = 143);  // roxo
+}
+
+Nesse trecho do código, o loop é iniciado com a chamada da função setColor() para diferentes cores, o que controla as saídas dos pinos correspondentes e muda a cor da lâmpada. 
+
+3.1. A função setColor() é chamada para definir a cor vermelha, onde o LED vermelho está ligado com 100% de brilho (255), o LED verde e azul estão desligados (0).
+
+3.2. Após definir a cor, há um atraso de 1500 milissegundos (1,5 segundos) usando a função delay(1500).
+
+3.3. Em seguida, a função setColor() é chamada novamente para definir a próxima cor, e esse processo se repete para as diferentes cores do arco-íris.
+
+Quanto à função setColor(), temos o seguinte código:
+
+void setColor(int red, int green, int blue)
+{
+  for (int x=0; x<3; x++) 
+  {
+  INC[x] = (COR1[x] - COR2[x]) / 256;
+  }
+  for (int x=0; x<256; x++) 
+  {
+    red = int(COR1[0]);
+    green = int(COR1[1]);
+    blue = int(COR1[2]);
+    analogWrite (redPin, red);
+    analogWrite (greenPin, green);
+    analogWrite (bluePin, blue);
+    delay(20);
+    COR1[0] -= INC[0];
+    COR1[1] -= INC[1];
+    COR1[2] -= INC[2];
+  }  
+}
+
+4.1. O primeiro loop "for" é usado para calcular os valores de incremento (INC[x]) para os canais red, green e blue, permitindo uma transição suave entre as cores. Isso é feito calculando a diferença entre os valores iniciais (COR1[x]) e finais (COR2[x]) e dividindo essa diferença por 256.
+
+for (int x=0; x<3; x++) 
+  {
+  INC[x] = (COR1[x] - COR2[x]) / 256;
+  }
+
+
+4.2. O segundo loop "for" executa 256 vezes para fazer a transição de cor. Ele atualiza os valores de red, green e blue com base nos valores em COR1[], escreve esses valores nos pinos correspondentes usando a função analogWrite() para controlar o brilho dos LEDs e, em seguida, aguarda 20 milissegundos antes de atualizar os valores de COR1[] para a próxima etapa da transição.
+
+for (int x=0; x<256; x++) 
+  {
+    red = int(COR1[0]);
+    green = int(COR1[1]);
+    blue = int(COR1[2]);
+    analogWrite (redPin, red);
+    analogWrite (greenPin, green);
+    analogWrite (bluePin, blue);
+    delay(20);
+    COR1[0] -= INC[0];
+    COR1[1] -= INC[1];
+    COR1[2] -= INC[2];
+  }  
+
+
+4.3. Após 256 passos, a cor terá mudado gradualmente de uma cor para outra, e o programa volta ao loop da função loop() para definir a próxima cor do arco-íris.
+
+
+
+
+
 
