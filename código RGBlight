@@ -1,0 +1,54 @@
+
+float COR1[3];
+float COR2[3];
+float INC[3];
+ 
+int red, green, blue;
+int redPin = 11;
+int greenPin = 10;
+int bluePin = 9;
+ 
+void setup()
+{
+  COR1[0] = 0;
+  COR1[1] = 0;
+  COR1[2] = 0;
+ 
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+}
+ 
+void loop()
+{
+  setColor(COR2[0] = 255, COR2[1] = 0, COR2[2] = 0 );  // vermelho
+  delay(1500);
+  setColor(COR2[0] = 255, COR2[1] = 117, COR2[2] = 10);  // laranja
+  delay(1500);
+  setColor(COR2[0] = 255, COR2[1] = 255, COR2[2] = 0 );  // amarelo
+  delay(1500);
+  setColor(COR2[0] = 0, COR2[1] = 255, COR2[2] = 0 );  // verde
+  delay(1500);
+  setColor(COR2[0] = 0, COR2[1] = 0, COR2[2] = 255 );  // azul
+  delay(1500);
+  setColor(COR2[0] = 75, COR2[1] = 0, COR2[2] = 130);  // índigo
+  delay(1500);
+  setColor(COR2[0] = 143, COR2[1] = 0, COR2[2] = 143);  // roxo
+}
+
+void setColor(int red, int green, int blue)
+{
+  for (int x=0; x<3; x++) 
+  {
+  INC[x] = (COR1[x] - COR2[x]) / 256;
+  }
+  for (int x=0; x<256; x++) 
+  {
+    red = int(COR1[0]);
+    green = int(COR1[1]);
+    blue = int(COR1[2]);
+    analogWrite (redPin, red);
+    analogWrite (greenPin, green);
+    analogWrite (bluePin, blue);
+    delay(20);
+    COR1[0] -= INC[0];
